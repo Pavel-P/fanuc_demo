@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot_description" default="robot_description"/>
+    <arg name="group_name" default="manipulator"/>
+    <arg name="world_frame" default="world"/>
+    <arg name="tcp_frame" default="tool0"/>
+
+    <node name="simple_message_demo" pkg="fanuc_demo" type="demo" output="screen"
+    args="$(arg robot_description) $(arg group_name) $(arg world_frame) $(arg tcp_frame)"/>
+</launch>

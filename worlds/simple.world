@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+    <world name="simple">
+        <include>
+            <uri>model://ground_plane</uri>
+        </include>
+        <include>
+            <uri>model://sun</uri>
+        </include>
+        <include>
+            <uri>model://fanuc_demo/models/fanuc_lrmate200id</uri>
+        </include>
+    </world>
+</sdf>

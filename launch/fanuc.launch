@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- LAUNCH INTERFACE -->
+
+    <arg name="controllers" default="joint_trajectory_controller"/>
+
+    <!-- in case you want to load moveit from here, it might be hard with the real HW though -->
+    <arg name="load_moveit" default="false"/>
+
+    <!--LAUNCH IMPLEMENTATION-->
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <rosparam param="source_list">[/lwr/joint_states]</rosparam>
+    </node>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro.py $(find fanuc_demo)/models/fanuc_lrmate200id/fanuc_lrmate200id.urdf.xacro"/>
+    <rosparam command="load" file="$(find fanuc_demo)/config/controllers.yaml"/>
+    <rosparam command="load" file="$(find fanuc_demo)/config/joint_names.yaml"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find fanuc_demo)/worlds/simple.world"/>
+        <arg name="paused" value="true"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="extra_gazebo_args" value=""/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+        <arg name="physics" value="ode"/>
+        <arg name="verbose" value="true"/>
+    </include>
+    
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller $(arg controllers)"/>
+
+    <group if="$(arg load_moveit)">
+        <include file="$(find fanuc_lrmate200id_moveit_config)/launch/move_group.launch">
+            <arg name="allow_trajectory_execution" value="true"/>  
+            <arg name="fake_execution" value="false"/>
+            <arg name="info" value="true"/>
+            <arg name="debug" value="false"/>
+        </include>
+
+        <!-- run Rviz and load the default config to see the state of the move_group node -->
+        <include file="$(find fanuc_lrmate200id_moveit_config)/launch/moveit_rviz.launch">
+            <arg name="config" value="true"/>
+            <arg name="debug" value="false"/>
+        </include>
+    </group>
+</launch>
