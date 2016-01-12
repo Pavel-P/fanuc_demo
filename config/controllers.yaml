@@ -2,7 +2,6 @@
 joint_state_controller:
     type: joint_state_controller/JointStateController
     publish_rate: 100
-
 # THIS CONFIGURATION IS ACTUALLY SENDING TAU = K*Q
 joint_trajectory_controller:
     type: position_controllers/JointTrajectoryController

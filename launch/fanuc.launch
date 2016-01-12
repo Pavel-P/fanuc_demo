@@ -1,38 +1,52 @@
 <?xml version="1.0"?>
 
+<!-- Launch file for FANUC LRMate200id for gazebo simulation and moveit interface -->
 <launch>
     <!-- LAUNCH INTERFACE -->
+    <arg name="sim" default="true" doc="Use gazebo instead of real robot" />
+    <arg name="controllers" default="joint_trajectory_controller" doc="Controllers to load on start up"/>
 
-    <arg name="controllers" default="joint_trajectory_controller"/>
-
-    <!-- in case you want to load moveit from here, it might be hard with the real HW though -->
-    <arg name="load_moveit" default="false"/>
+    <!-- in case you want to load moveit from here-->
+    <arg name="load_moveit" default="true"/>
+    <arg name="load_descartes" default="true"/>
+    <arg name="robot_ip" unless="$(arg sim)" default="" doc="IP of controller (only required if not using gazebo)" />
+    <arg name="use_bswap" unless="$(arg sim)" default="true" doc="If true, robot driver will byte-swap all incoming and outgoing data (only required if not using gazebo)" />
 
     <!--LAUNCH IMPLEMENTATION-->
 
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-        <rosparam param="source_list">[/lwr/joint_states]</rosparam>
-    </node>
+  <!-- run the "real robot" interface nodes -->
+  <!--   - this typically includes: robot_state, motion_interface, and joint_trajectory_action nodes -->
+  <!--   - replace these calls with appropriate robot-specific calls or launch files -->
+    <group unless="$(arg sim)">
+       <include file="$(find fanuc_lrmate200id_support)/launch/robot_interface_streaming_lrmate200id.launch" >
+         <arg name="robot_ip" value="$(arg robot_ip)"/>
+         <arg name="use_bswap"  value="$(arg use_bswap)" />
+       </include>
+    </group>
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
     <param name="robot_description" command="$(find xacro)/xacro.py $(find fanuc_demo)/models/fanuc_lrmate200id/fanuc_lrmate200id.urdf.xacro"/>
     <rosparam command="load" file="$(find fanuc_demo)/config/controllers.yaml"/>
     <rosparam command="load" file="$(find fanuc_demo)/config/joint_names.yaml"/>
-
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find fanuc_demo)/worlds/simple.world"/>
-        <arg name="paused" value="true"/>
-        <arg name="use_sim_time" value="true"/>
-        <arg name="extra_gazebo_args" value=""/>
-        <arg name="gui" value="true"/>
-        <arg name="headless" value="false"/>
-        <arg name="debug" value="false"/>
-        <arg name="physics" value="ode"/>
-        <arg name="verbose" value="true"/>
-    </include>
     
-    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller $(arg controllers)"/>
+    <group if="$(arg sim)">
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+            <rosparam param="source_list">[/fanuc/joint_states]</rosparam>
+        </node>
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+	   <arg name="world_name" value="$(find fanuc_demo)/worlds/simple.world"/>
+	   <arg name="paused" value="true"/>
+	   <arg name="use_sim_time" value="true"/>
+	   <arg name="extra_gazebo_args" value=""/>
+	   <arg name="gui" value="true"/>
+	   <arg name="headless" value="false"/>
+	   <arg name="debug" value="false"/>
+	   <arg name="physics" value="ode"/>
+	   <arg name="verbose" value="true"/>
+	</include>
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller $(arg controllers)"/>
+    </group>
 
     <group if="$(arg load_moveit)">
         <include file="$(find fanuc_lrmate200id_moveit_config)/launch/move_group.launch">
@@ -40,6 +54,7 @@
             <arg name="fake_execution" value="false"/>
             <arg name="info" value="true"/>
             <arg name="debug" value="false"/>
+            <arg name="publish_monitored_planning_scene" value="true"/>
         </include>
 
         <!-- run Rviz and load the default config to see the state of the move_group node -->
@@ -47,5 +62,20 @@
             <arg name="config" value="true"/>
             <arg name="debug" value="false"/>
         </include>
+    </group>
+
+    <group if="$(arg sim)">
+       <group if="$(arg load_descartes)">
+           <include file="$(find fanuc_demo)/launch/demo.launch">
+               <arg name="joint_trajectory_ns" value="joint_trajectory_controller/follow_joint_trajectory"/>
+           </include>
+       </group>
+    </group>
+    <group unless="$(arg sim)">
+       <group if="$(arg load_descartes)">
+           <include file="$(find fanuc_demo)/launch/demo.launch">
+               <arg name="joint_trajectory_ns" value="joint_trajectory_action"/>
+           </include>
+       </group>
     </group>
 </launch>

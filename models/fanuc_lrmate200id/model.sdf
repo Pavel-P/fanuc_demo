@@ -1,9 +1,9 @@
 <sdf version='1.5'>
   <model name='fanuc_lrmate200id'>
     <link name='base_link'>
-      <pose>0 0 0 0 -0 0</pose>
+      <pose frame=''>0 0 0 0 -0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <mass>4</mass>
         <inertia>
           <ixx>0.0216667</ixx>
@@ -15,7 +15,7 @@
         </inertia>
       </inertial>
       <collision name='base_link_collision'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -32,7 +32,7 @@
         </surface>
       </collision>
       <visual name='base_link_visual'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -70,9 +70,9 @@
       </axis>
     </joint>
     <link name='link_1'>
-      <pose>0 0 0.33 0 -0 0</pose>
+      <pose frame=''>0 0 0.33 0 -0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <mass>4</mass>
         <inertia>
           <ixx>0.0322667</ixx>
@@ -84,7 +84,7 @@
         </inertia>
       </inertial>
       <collision name='link_1_collision'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -101,7 +101,7 @@
         </surface>
       </collision>
       <visual name='link_1_visual'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -139,9 +139,9 @@
       </axis>
     </joint>
     <link name='link_2'>
-      <pose>0.05 0 0.33 0 -0 0</pose>
+      <pose frame=''>0.05 0 0.33 0 -0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <mass>5</mass>
         <inertia>
           <ixx>0.0973333</ixx>
@@ -153,7 +153,7 @@
         </inertia>
       </inertial>
       <collision name='link_2_collision'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -170,7 +170,7 @@
         </surface>
       </collision>
       <visual name='link_2_visual'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -208,9 +208,9 @@
       </axis>
     </joint>
     <link name='link_3'>
-      <pose>0.05 0 0.66 0 -0 0</pose>
+      <pose frame=''>0.05 0 0.66 0 -0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <mass>4</mass>
         <inertia>
           <ixx>0.0104333</ixx>
@@ -222,7 +222,7 @@
         </inertia>
       </inertial>
       <collision name='link_3_collision'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -239,7 +239,7 @@
         </surface>
       </collision>
       <visual name='link_3_visual'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -277,9 +277,9 @@
       </axis>
     </joint>
     <link name='link_4'>
-      <pose>0.05 0 0.695 0 -0 0</pose>
+      <pose frame=''>0.05 0 0.695 0 -0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <mass>5</mass>
         <inertia>
           <ixx>0.00833333</ixx>
@@ -291,7 +291,7 @@
         </inertia>
       </inertial>
       <collision name='link_4_collision'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -308,7 +308,7 @@
         </surface>
       </collision>
       <visual name='link_4_visual'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -346,9 +346,9 @@
       </axis>
     </joint>
     <link name='link_5'>
-      <pose>0.385 0 0.695 0 -0 0</pose>
+      <pose frame=''>0.385 0 0.695 0 -0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <mass>1.5</mass>
         <inertia>
           <ixx>0.0018125</ixx>
@@ -360,7 +360,7 @@
         </inertia>
       </inertial>
       <collision name='link_5_collision'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -377,7 +377,7 @@
         </surface>
       </collision>
       <visual name='link_5_visual'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -415,9 +415,9 @@
       </axis>
     </joint>
     <link name='link_6'>
-      <pose>0.465 0 0.695 0 -0 0</pose>
+      <pose frame=''>0.465 0 0.695 0 -0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <mass>0.25</mass>
         <inertia>
           <ixx>6.66666e-05</ixx>
@@ -429,7 +429,7 @@
         </inertia>
       </inertial>
       <collision name='link_6_collision'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -446,7 +446,7 @@
         </surface>
       </collision>
       <visual name='link_6_visual'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>

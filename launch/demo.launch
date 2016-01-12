@@ -4,7 +4,8 @@
     <arg name="group_name" default="manipulator"/>
     <arg name="world_frame" default="world"/>
     <arg name="tcp_frame" default="tool0"/>
+    <arg name="joint_trajectory_ns" default="joint_trajectory_controller/follow_joint_trajectory"/>
 
-    <node name="simple_message_demo" pkg="fanuc_demo" type="demo" output="screen"
-    args="$(arg robot_description) $(arg group_name) $(arg world_frame) $(arg tcp_frame)"/>
+    <node name="demo" pkg="fanuc_demo" type="demo" output="screen"
+          args="$(arg robot_description) $(arg group_name) $(arg world_frame) $(arg tcp_frame) $(arg joint_trajectory_ns)"/>
 </launch>
