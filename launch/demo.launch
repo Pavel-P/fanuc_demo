@@ -6,6 +6,8 @@
     <arg name="tcp_frame" default="tool0"/>
     <arg name="joint_trajectory_ns" default="joint_trajectory_controller/follow_joint_trajectory"/>
 
-    <node name="demo" pkg="fanuc_demo" type="demo" output="screen"
+    <node name="demo" pkg="fanuc_demo" type="demo" output="screen" launch-prefix="xterm -e gdb --args"
           args="$(arg robot_description) $(arg group_name) $(arg world_frame) $(arg tcp_frame) $(arg joint_trajectory_ns)"/>
 </launch>
+
+

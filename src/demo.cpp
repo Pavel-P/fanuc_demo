@@ -22,12 +22,13 @@
 
 #include <stdio.h>      // stdin, stderr 
 #include <stddef.h>     // NULL, sizeof, size_t 
-#include <stdlib.h>     // atoi, atof 
+#include <stdlib.h>     // atoi, atof, system
 #include <ctype.h>      // isspace
 #include <math.h>
 #include <unistd.h>     //usleep
+#include <fcntl.h>
 #include <iostream>      //cout
-
+#include <sstream>
 
 typedef std::vector<descartes_core::TrajectoryPtPtr> TrajectoryVec;
 typedef TrajectoryVec::const_iterator TrajectoryIter;
@@ -172,6 +173,16 @@ int main (int argc, char **argv)
         if ('h' == *ptr)
         {
             printf("Help:\n");
+            printf("a - axial (Z axis)\n");
+            printf("c - cartesian\n");
+            printf("j - joint\n\n");
+            printf("i - interpolate\n");
+            printf("p - plan\n");
+            printf("e - execute\n\n");
+            printf("q - quit\n");
+            printf("Enter 7 numbers (separated by spaces) to add a trajectory point\n");
+            printf("Cart and Axial: <x> <y> <z> <r> <p> <y> <t>\n");
+            printf("Joint: <j0> <j1> <j2> <j3> <j4> <j5> <t>\n\n");
             continue;
         }
         else if ('c' == *ptr)
@@ -231,8 +242,6 @@ int main (int argc, char **argv)
             {
                 trajectory_msgs::JointTrajectory joint_solution = toROSJointTrajectory(results, *model, j_names, times);
                 executeTrajectory(joint_solution, joint_trajectory_ns);
-
-                ROS_ERROR("Time size: %ld Results size: %ld", times.size(), results.size());	
             }
             results.erase(results.begin());
             times.pop_back();

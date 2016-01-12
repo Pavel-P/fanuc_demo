@@ -36,7 +36,7 @@
         </node>
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
 	   <arg name="world_name" value="$(find fanuc_demo)/worlds/simple.world"/>
-	   <arg name="paused" value="true"/>
+	   <arg name="paused" value="false"/>
 	   <arg name="use_sim_time" value="true"/>
 	   <arg name="extra_gazebo_args" value=""/>
 	   <arg name="gui" value="true"/>
@@ -65,17 +65,17 @@
     </group>
 
     <group if="$(arg sim)">
-       <group if="$(arg load_descartes)">
-           <include file="$(find fanuc_demo)/launch/demo.launch">
-               <arg name="joint_trajectory_ns" value="joint_trajectory_controller/follow_joint_trajectory"/>
-           </include>
-       </group>
+        <group if="$(arg load_descartes)">
+            <include file="$(find fanuc_demo)/launch/demo.launch">
+                <arg name="joint_trajectory_ns" value="joint_trajectory_controller/follow_joint_trajectory"/>
+            </include>
+        </group>
     </group>
     <group unless="$(arg sim)">
-       <group if="$(arg load_descartes)">
-           <include file="$(find fanuc_demo)/launch/demo.launch">
-               <arg name="joint_trajectory_ns" value="joint_trajectory_action"/>
-           </include>
-       </group>
+        <group if="$(arg load_descartes)">
+             <include file="$(find fanuc_demo)/launch/demo.launch">
+                 <arg name="joint_trajectory_ns" value="joint_trajectory_action"/>
+            </include>
+        </group>
     </group>
 </launch>
