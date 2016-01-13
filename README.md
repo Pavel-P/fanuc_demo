@@ -5,7 +5,7 @@ Required packages:
 - fanuc_experimental (forked)
 - gazebo_ros_pkgs
 - descartes (forked)
-- gazebo
+- gazebo, version 5
 - libgazebo5-dev
 - moveit
 
