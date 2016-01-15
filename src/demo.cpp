@@ -281,7 +281,7 @@ int main (int argc, char **argv)
                     {
                         f4 = -f4 * M_PI / 180;
                         f5 = f5 * M_PI / 180;
-                        f6 = -f6 * M_PI / 180;
+                        f6 = f6 * M_PI / 180;
                         Eigen::Affine3d pose;
                         Eigen::Affine3d ax = Eigen::Affine3d(Eigen::AngleAxisd(f4, Eigen::Vector3d(1, 0, 0)));
                         Eigen::Affine3d ay = Eigen::Affine3d(Eigen::AngleAxisd(f5, Eigen::Vector3d(0, 1, 0)));
