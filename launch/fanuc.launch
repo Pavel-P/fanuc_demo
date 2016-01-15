@@ -31,20 +31,17 @@
     <rosparam command="load" file="$(find fanuc_demo)/config/joint_names.yaml"/>
     
     <group if="$(arg sim)">
-        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-            <rosparam param="source_list">[/fanuc/joint_states]</rosparam>
-        </node>
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
-	   <arg name="world_name" value="$(find fanuc_demo)/worlds/simple.world"/>
-	   <arg name="paused" value="false"/>
-	   <arg name="use_sim_time" value="true"/>
-	   <arg name="extra_gazebo_args" value=""/>
-	   <arg name="gui" value="true"/>
-	   <arg name="headless" value="false"/>
-	   <arg name="debug" value="false"/>
-	   <arg name="physics" value="ode"/>
-	   <arg name="verbose" value="true"/>
-	</include>
+	        <arg name="world_name" value="$(find fanuc_demo)/worlds/simple.world"/>
+	        <arg name="paused" value="false"/>
+	        <arg name="use_sim_time" value="true"/>
+	        <arg name="extra_gazebo_args" value=""/>
+	        <arg name="gui" value="true"/>
+	        <arg name="headless" value="false"/>
+	        <arg name="debug" value="false"/>
+	        <arg name="physics" value="ode"/>
+	        <arg name="verbose" value="true"/>
+	    </include>
         <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller $(arg controllers)"/>
     </group>
 

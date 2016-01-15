@@ -147,24 +147,35 @@ int main (int argc, char **argv)
     TrajectoryType traj_flag = CART;
     descartes_trajectory::AxialSymmetricPt::FreeAxis axis = descartes_trajectory::AxialSymmetricPt::Z_AXIS;
 
+    using namespace descartes_core;
+    using namespace descartes_trajectory;
+
     TrajectoryVec points;
     TrajectoryVec results;
     std::vector<double> times;
 
+    std::vector<double> joints;
 
     printf("***Descartes Trajectory Tool***\n");
     printf("Type h for help\n");
     while (true)
     {
         printf("> ");
-        using namespace descartes_core;
-        using namespace descartes_trajectory;
         char inbuf[1024];
         double f1, f2, f3, f4, f5, f6, f7;
+        if (points.empty())
+        {
+            model->updateScene();
+            model->getState()->copyJointGroupPositions(group_name, joints);
+            TrajectoryPtPtr current_pos = TrajectoryPtPtr(new JointTrajectoryPt(joints));
+            points.insert(points.begin(),current_pos);
+        }
+
         if (NULL == fgets(inbuf, sizeof(inbuf), stdin)) break;
         // skip leading whitespace
         char *ptr = inbuf;
         while (isspace(*ptr)) ptr++;
+
         if ('q' == *ptr)
         {
             printf("Quitting...\n");
@@ -232,19 +243,12 @@ int main (int argc, char **argv)
         {
             printf("Executing...\n");
 
-            //add dummy start point (needed for gazebo, which drops first point)
-            std::vector<double> joints;
-            model->getState()->copyJointGroupPositions(group_name, joints);
-            TrajectoryPtPtr current_pos = TrajectoryPtPtr(new JointTrajectoryPt(joints));
-            results.insert(results.begin(),current_pos);
-            times.push_back(1.0);
+            //add start point (needed for gazebo and most recent fanuc driver)
             if (!results.empty())
             {
                 trajectory_msgs::JointTrajectory joint_solution = toROSJointTrajectory(results, *model, j_names, times);
                 executeTrajectory(joint_solution, joint_trajectory_ns);
             }
-            results.erase(results.begin());
-            times.pop_back();
             continue;
         }
         else if ('p' == *ptr)

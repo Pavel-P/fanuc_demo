@@ -3,11 +3,18 @@
 Required packages:
 - fanuc
 - fanuc_experimental (forked)
-- gazebo_ros_pkgs
 - descartes (forked)
+- ROS Industrial packages
+- moveit_full
+- ros_control
+- ros_controllers
 - gazebo
+- gazebo_ros_pkgs (source install)
 - libgazebo5-dev
-- moveit
+
+Optional:
+- industrial_trajectory_filters
+- fermi moveit_cartesian_motion_plugin (rkojcev fork)
 
 #Use
 
