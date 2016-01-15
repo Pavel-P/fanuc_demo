@@ -163,13 +163,15 @@ int main (int argc, char **argv)
         printf("> ");
         char inbuf[1024];
         double f1, f2, f3, f4, f5, f6, f7;
-        if (points.empty())
+        
+        if (!points.empty())
         {
-            model->updateScene();
-            model->getState()->copyJointGroupPositions(group_name, joints);
-            TrajectoryPtPtr current_pos = TrajectoryPtPtr(new JointTrajectoryPt(joints));
-            points.insert(points.begin(),current_pos);
+            points.erase(points.begin());
         }
+        model->updateScene();
+        model->getState()->copyJointGroupPositions(group_name, joints);
+        TrajectoryPtPtr current_pos = TrajectoryPtPtr(new JointTrajectoryPt(joints));
+        points.insert(points.begin(),current_pos);
 
         if (NULL == fgets(inbuf, sizeof(inbuf), stdin)) break;
         // skip leading whitespace
