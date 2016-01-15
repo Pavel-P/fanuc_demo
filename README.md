@@ -8,8 +8,8 @@ Required packages:
 - moveit_full
 - ros_control
 - ros_controllers
-- gazebo
 - gazebo_ros_pkgs (source install)
+- gazebo, version 5
 - libgazebo5-dev
 
 Optional:
