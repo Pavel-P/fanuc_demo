@@ -107,6 +107,9 @@ int main (int argc, char **argv)
     /*SET GLOBAL PROPERTIES*/
 
     double Z_OFFSET = .33;
+
+    std::vector<double> joint_weights = {100,1,1,100,1,1};
+
     std::string robot_description = argv[1];
     std::string group_name = argv[2];
     std::string world_frame = argv[3];
@@ -120,14 +123,15 @@ int main (int argc, char **argv)
     spinner.start();
     ros::NodeHandle nh;
 
-    //	    descartes_core::RobotModelPtr model (new descartes_moveit::MoveitStateAdapter);
-    descartes_moveit::MoveitStateAdapterPtr model (new descartes_moveit::MoveitStateAdapter);
+    descartes_core::RobotModelPtr model (new descartes_moveit::MoveitStateAdapter);
+
     if (!model->initialize(robot_description, group_name, world_frame, tcp_frame))
     {
         ROS_INFO("Could not initialize robot model");
         exit(-1);
     }
     model->setCheckCollisions(true);
+    model->setJointWeights(joint_weights);
     ROS_INFO("Robot initialized successfully!");
 
     descartes_planner::DensePlanner planner;
@@ -168,10 +172,17 @@ int main (int argc, char **argv)
         {
             points.erase(points.begin());
         }
+
         model->updateScene();
         model->getState()->copyJointGroupPositions(group_name, joints);
         TrajectoryPtPtr current_pos = TrajectoryPtPtr(new JointTrajectoryPt(joints));
+
         points.insert(points.begin(),current_pos);
+        if (!results.empty())
+        {
+            results.erase(results.begin());
+            results.insert(results.begin(),current_pos);
+        }
 
         if (NULL == fgets(inbuf, sizeof(inbuf), stdin)) break;
         // skip leading whitespace
@@ -281,7 +292,7 @@ int main (int argc, char **argv)
                     }; break;
                 case CART:
                     {
-                        f4 = -f4 * M_PI / 180;
+                        f4 = f4 * M_PI / 180;
                         f5 = f5 * M_PI / 180;
                         f6 = f6 * M_PI / 180;
                         Eigen::Affine3d pose;
